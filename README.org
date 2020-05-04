@@ -1,4 +1,4 @@
-* SRFI 195: Multiple value boxes
+* SRFI 195: Multiple-value boxes
 
 ** by Marc Nieper-Wißkirchen
 
@@ -6,7 +6,7 @@
 
 keywords: [[https://srfi.schemers.org/?keywords=data-structure][Data Structure]]
 
-This repository hosts [[https://srfi.schemers.org/srfi-195/][SRFI 195]]: Multiple value boxes, a [[https://srfi.schemers.org/][Scheme Request for Implementation]].
+This repository hosts [[https://srfi.schemers.org/srfi-195/][SRFI 195]]: Multiple-value boxes, a [[https://srfi.schemers.org/][Scheme Request for Implementation]].
 
 This SRFI is in /draft/ status.
 

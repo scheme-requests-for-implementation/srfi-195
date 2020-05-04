@@ -1,1 +1,1 @@
-(define-library (srfi 111) (include-library-declarations "194-declarations.scm"))
+(define-library (srfi 111) (include-library-declarations "195-declarations.scm"))

@@ -20,6 +20,34 @@
 ;; CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(define-library (srfi 195)
-  (include-library-declarations "111-declarations.scm")
-  (export box-arity unbox-value set-box-value!))
+(define-record-type <box>
+  (make-box v)
+  box?
+  (v unbox box-set!))
+
+(define (box . v*)
+  (make-box (%values v*)))
+
+(define (set-box! b . v*)
+  (box-set! b (%values v*)))
+
+(define (%values? v)
+  (and (pair? v) (eq? *values-tag* (car v))))
+
+(define (box-arity b)
+  (let ((v (unbox b)))
+    (if (%values? v)
+        (length (cdr v))
+        1)))
+
+(define (unbox-value b i)
+  (let ((v (unbox b)))
+    (if (%values? v)
+        (list-ref v (+ 1 i))
+        v)))
+
+(define (set-box-value! b i obj)
+  (let ((v (unbox b)))
+    (if (%values? v)
+        (list-set! v (+ 1 i) obj)
+        (box-set! b obj))))

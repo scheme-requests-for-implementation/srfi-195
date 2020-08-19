@@ -87,15 +87,101 @@
       consist of a single box).
     </p>
 
+    <p>
+      In a number of use cases, the multiple-valued boxes of this
+      SRFI may be used interchangeably with vectors or lists.  In
+      general, however, they are different things:
+    </p>
+
+    <ul>
+      <li>
+        The constructors <code>(list)</code>
+        and <code>(vector)</code> do not have to return a newly
+        allocated object each time, the constructor <code>(box)</code>
+        does.
+      </li>
+      <li>
+        Vectors are optimized for random access of single elements.
+        Boxes, on the other hand, are supposed to be implemented in a
+        way such that setting all values at once and passing all
+        values at once to a continuation are efficient.  For example,
+        the boxes of this SRFI are the natural candidate to implement
+        the Justs, Lefts, and Rights of SRFI 189.
+      </li>
+      <li>
+        Lists and vectors are usually viewed as sequences (of single
+        values) whose lengthes are the length of the underlying list
+        or vector.  A box, however, shall be viewed as a sequence (of
+        multiple values) of length one much like the Justs, Lefts, and
+        Rights of SRFI 189.
+      </li>
+      <li>
+        Contrary to vectors and lists, a box shall convey the meaning
+        of multiple value reified as a single value, whereas packing
+        and unpacking (i.e. boxing and unboxing) from and into
+        multiple values shall be as efficient as possible.
+      </li>
+    </ul>
+
+    <h1>Example</h1>
+
+    <p>
+      Instead of writing explicit iterations, the use of higher-order
+      functions like <code>fold</code> of SRFI is often simpler and
+      clearer.  While one can pass an arbitrary number of values from
+      one step to the next in an iteration, the <code>fold</code>
+      procedure only allows one, initially
+      called <code><var>knil</var></code> in SRFI 1.  The reason is
+      that <code>fold</code> and the folding
+      procedure <code><var>kons</var></code> are already of variable
+      arity in the number of lists to fold over.
+    </p>
+
+    <p>
+      By reifying the concept of multiple values as a single value, a
+      variant of <code>fold</code>, dubbed <code>fold*</code>, can be
+      specified that allows passing an arbitrary (but fixed) number of
+      values from one step to the next of the iteration.  The
+      following is an implementation written for clarity and not speed:
+    </p>
+
+    <pre>
+(define (fold* kons* knil* clist . clist*)
+  (unbox (apply fold
+                (lambda args
+                  (call-with-values (lambda () (apply kons* args)) box))
+                knil*
+                clist
+                clist*)))</pre>
+
+    <p>
+      Here, <code><var>knil*</var></code> is a box reifying the seed
+      states and <code><var>kons*</var></code> is a procedure
+      taking <var>n</var> + 1 parameters, one element from each list, and the
+      fold states reified into a box, and returns the next seed states
+      as multiple values.
+    </p>
+
+    <p>Example:</p>
+
+    <pre>
+(fold* (lambda (e b)
+         (receive (lis n) (unbox b)
+           (values (cons e lis) (+ 1 n))))
+       (box '() 0) '(1 2 3 4 5))</pre>
+
+    <p>evaluates to two values, <code>'(5 4 3 2 1)</code> and <code>5</code>.</p>
+
     <h1>Specification</h1>
 
     <p>In a Scheme system supporting both SRFI 111 and this SRFI, the
-      bindings exported by both SRFIs have to be equivalent.</p>
+      bindings that are exported by both SRFIs have to be the
+      same.</p>
 
-    <h2>Procedures</h2>
+    <h2>Boxes</h2>
 
     <p>The following procedures implement the box type (which is disjoint
-      from all other Scheme types), and are exported by
+      from all other Scheme types) and are exported by
       the <code>(srfi 111)</code> and <code>(srfi 195)</code>
       libraries.
     </p>
@@ -129,7 +215,10 @@
 
     <p>
       Mutator. Changes <code><var>box</var></code> to
-      hold <code><var>value</var></code>s.
+      hold <code><var>value</var></code>s.  It is an error
+      if <code>set-box!</code> is called with a number of values that
+      differs from the number of values in the box being set.  (In
+      other words, <code>set-box!</code> does not allocate memory.)
     </p>
 
     <p>
@@ -141,15 +230,46 @@
       to box and not otherwise, and while they must
       be <code>equal?</code> if they are <code>eqv?</code>, the
       converse is implementation-dependent.
+    </p>
+
+    <h2>Introspection</h2>
+
+    <p>
+      The following procedures are exported by <code>(srfi 195)</code>
+      library.
+    </p>
+
+    <p><code>(box-arity <var>box</var>)</code></p>
+    <p>Accessor. Returns the number of values
+      of <code><var>box</var></code>.</p>
+
+    <p><code>(unbox-value <var>box</var> <var>i</var>)</code></p>
+    <p>Accessor. Returns the <code><var>i</var></code>th value
+    of <code><var>box</var></code>.  It is an error
+    if <code><var>i</var></code> is not an exact integer between 0
+    and <var>n</var> - 1, when <var>n</var> is the number of values
+    of <code><var>box</var></code>.</p>
+
+    <p><code>(set-box-value! <var>box</var> <var>i</var> <var>obj</var>)</code></p>
+    <p>Mutator. Changes the <code><var>i</var></code>th value
+    of <code><var>box</var></code> to <code><var>obj</var></code>.  It
+    is an error if <code><var>i</var></code> is not an exact integer
+    between 0 and <var>n</var> - 1, when <var>n</var> is the number of
+    values of <code><var>box</var></code>.</p>
 
     <h1>Implementation</h1>
 
     <p>A simple, portable R7RS-implementation of <code>(srfi
       195)</code> and a compatible <code>(srfi 111)</code> is given in
-      the repository of this SRFI.
+      the <a href="https://github.com/scheme-requests-for-implementation/srfi-195">repository
+      of this SRFI</a>.
     </p>
 
-    </p>
+    <p>Scheme implementers are encouraged to provide fast specialized
+      implementations of preferences of the SRFI 111 procedures.</p>
+
+    <p>By way of an example, the implementation in the repository of
+      this SRFI contains specialized code for Chibi-Scheme.</p>
 
     <h1>Acknowledgements</h1>
 
@@ -185,4 +305,6 @@
       SOFTWARE.
 
       <hr>
-      <address>Editor: <a href="mailto:srfi-editors+at+srfi+dot+schemers+dot+org">Arthur A. Gleckler</a></address></body></html>
+      <address>Editor: <a href="mailto:srfi-editors+at+srfi+dot+schemers+dot+org">Arthur A. Gleckler</a></address>
+  </body>
+</html>

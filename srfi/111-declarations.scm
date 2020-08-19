@@ -20,6 +20,11 @@
 ;; CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(define-library (srfi 195)
-  (include-library-declarations "111-declarations.scm")
-  (export box-arity unbox-value set-box-value!))
+(export box box? unbox set-box!)
+(import (scheme base))
+(cond-expand
+  (chibi
+   (import (only (chibi) *values-tag* %values))
+   (include "195-chibi.scm"))
+  (else
+   (include "195.scm")))

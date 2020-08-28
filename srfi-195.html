@@ -3,22 +3,18 @@
   <head>
     <meta charset="utf-8">
     <title>SRFI 195: Multiple-value boxes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/srfi.css" type="text/css">
     <link href="/favicon.png" rel="icon" sizes="192x192" type="image/png">
+    <link rel="stylesheet" href="https://srfi.schemers.org/srfi.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
   <body>
 
-    <h1>Title</h1>
+    <h1><a href="https://srfi.schemers.org/"><img class="srfi-logo" src="https://srfi.schemers.org/srfi-logo.svg" alt="SRFI logo" /></a>195: Multiple-value boxes</h1>
 
-    Multiple-value boxes
+    <p>by Marc Nieper-Wißkirchen</p>
 
-    <h1>Author</h1>
-
-    <p>Marc Nieper-Wißkirchen</p>
-
-    <h1>Status</h1>
+    <h2>Status</h2>
 
     <p>This SRFI is currently in <em>draft</em> status.  Here is <a href="https://srfi.schemers.org/srfi-process.html">an explanation</a> of each status that a SRFI can hold.  To provide input on this SRFI, please send email to <code><a href="mailto:srfi+minus+195+at+srfi+dotschemers+dot+org">srfi-195@<span class="antispam">nospam</span>srfi.schemers.org</a></code>.  To subscribe to the list, follow <a href="https://srfi.schemers.org/srfi-list-subscribe.html">these instructions</a>.  You can access previous messages via the mailing list <a href="https://srfi-email.schemers.org/srfi-195">archive</a>.</p>
     <ul>
@@ -28,7 +24,7 @@
       <li>Draft #2 published: 2020-08-19</li>
     </ul>
 
-    <h1>Abstract</h1>
+    <h2>Abstract</h2>
 
     <p>
       This SRFI extends the specification of the boxes
@@ -38,11 +34,11 @@
       multiple values can be boxed with this SRFI.
     </p>
 
-    <h1>Issues</h1>
+    <h2>Issues</h2>
 
     <p>There are currently no issues.</p>
 
-    <h1>Rationale</h1>
+    <h2>Rationale</h2>
 
     <p>
       At its core, Scheme's evaluation semantics is multiple-value
@@ -124,7 +120,7 @@
       </li>
     </ul>
 
-    <h1>Example</h1>
+    <h2>Example</h2>
 
     <p>
       Instead of writing explicit iterations, the use of higher-order
@@ -173,13 +169,13 @@
 
     <p>evaluates to two values, <code>'(5 4 3 2 1)</code> and <code>5</code>.</p>
 
-    <h1>Specification</h1>
+    <h2>Specification</h2>
 
     <p>In a Scheme system supporting both SRFI 111 and this SRFI, the
       bindings that are exported by both SRFIs have to be the
       same.</p>
 
-    <h2>Boxes</h2>
+    <h3>Boxes</h3>
 
     <p>The following procedures implement the box type (which is disjoint
       from all other Scheme types) and are exported by
@@ -233,7 +229,7 @@
       converse is implementation-dependent.
     </p>
 
-    <h2>Introspection</h2>
+    <h3>Introspection</h3>
 
     <p>
       The following procedures are exported by <code>(srfi 195)</code>
@@ -258,7 +254,7 @@
     between 0 and <var>n</var> - 1, when <var>n</var> is the number of
     values of <code><var>box</var></code>.</p>
 
-    <h1>Implementation</h1>
+    <h2>Implementation</h2>
 
     <p>A simple, portable R7RS-implementation of <code>(srfi
       195)</code> and a compatible <code>(srfi 111)</code> is given in
@@ -272,7 +268,7 @@
     <p>By way of an example, the implementation in the repository of
       this SRFI contains specialized code for Chibi-Scheme.</p>
 
-    <h1>Acknowledgements</h1>
+    <h2>Acknowledgements</h2>
 
     <p>
       This SRFI is based on SRFI 111, written by John Cowan.  In the

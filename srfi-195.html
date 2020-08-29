@@ -76,9 +76,10 @@
     </p>
 
     <p>Multiple-value-aware boxes as described in this SRFI form a
-      natural Scheme monad as much as the monads defined in SRFI 165
-      and SRFI 189 do.  However, it is left to a future SRFI to
-      describe a monadic interface to boxes (the monadic pure would be
+      natural Scheme monad as much as the monads defined in <a
+      href="https://srfi.schemers.org/srfi-165/srfi-165.html">SRFI
+      165</a> and SRFI 189 do.  However, it is left to a future SRFI to
+      describe a monadic interface to boxes. (The monadic pure would be
       the <code>box</code> procedure; the monadic join would
       be <code>unbox</code> when restricted to boxes whose values
       consist of a single box).
@@ -128,7 +129,9 @@
       clearer.  While one can pass an arbitrary number of values from
       one step to the next in an iteration, the <code>fold</code>
       procedure only allows one, initially
-      called <code><var>knil</var></code> in SRFI 1.  The reason is
+      called <code><var>knil</var></code> in <a
+      href="https://srfi.schemers.org/srfi-1/srfi-1.html">SRFI 1</a>.
+      The reason is
       that <code>fold</code> and the folding
       procedure <code><var>kons</var></code> are already of variable
       arity in the number of lists to fold over.

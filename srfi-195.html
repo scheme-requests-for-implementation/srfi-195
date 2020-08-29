@@ -44,7 +44,7 @@
       At its core, Scheme's evaluation semantics is multiple-value
       based.  Continuations can accept an arbitrary number of values and
       expressions can yield an arbitrary number of values.  This is
-      contrast to the functional languages ML and Haskell.
+      in contrast to the functional languages ML and Haskell.
     </p>
 
     <p>
@@ -124,7 +124,7 @@
     <h2>Example</h2>
 
     <p>
-      Instead of writing explicit iterations, the use of higher-order
+      Unlike writing explicit iterations, the use of higher-order
       functions like <code>fold</code> of SRFI is often simpler and
       clearer.  While one can pass an arbitrary number of values from
       one step to the next in an iteration, the <code>fold</code>
@@ -206,7 +206,7 @@
     </p>
 
     <p>
-      Accessor. Returns the current values of <code><var>box</var></code>.
+      Accessor. Returns the values currently in <code><var>box</var></code>.
     </p>
 
     <p>
@@ -235,32 +235,32 @@
     <h3>Introspection</h3>
 
     <p>
-      The following procedures are exported by <code>(srfi 195)</code>
+      The following procedures are exported by the <code>(srfi 195)</code>
       library.
     </p>
 
     <p><code>(box-arity <var>box</var>)</code></p>
     <p>Accessor. Returns the number of values
-      of <code><var>box</var></code>.</p>
+      in <code><var>box</var></code>.</p>
 
     <p><code>(unbox-value <var>box</var> <var>i</var>)</code></p>
     <p>Accessor. Returns the <code><var>i</var></code>th value
     of <code><var>box</var></code>.  It is an error
     if <code><var>i</var></code> is not an exact integer between 0
     and <var>n</var> - 1, when <var>n</var> is the number of values
-    of <code><var>box</var></code>.</p>
+    in <code><var>box</var></code>.</p>
 
     <p><code>(set-box-value! <var>box</var> <var>i</var> <var>obj</var>)</code></p>
     <p>Mutator. Changes the <code><var>i</var></code>th value
     of <code><var>box</var></code> to <code><var>obj</var></code>.  It
     is an error if <code><var>i</var></code> is not an exact integer
     between 0 and <var>n</var> - 1, when <var>n</var> is the number of
-    values of <code><var>box</var></code>.</p>
+    values in <code><var>box</var></code>.</p>
 
     <h2>Implementation</h2>
 
     <p>A simple, portable R7RS-implementation of <code>(srfi
-      195)</code> and a compatible <code>(srfi 111)</code> is given in
+      195)</code> and a compatible <code>(srfi 111)</code> are given in
       the <a href="https://github.com/scheme-requests-for-implementation/srfi-195">repository
       of this SRFI</a>.
     </p>

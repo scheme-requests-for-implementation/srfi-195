@@ -8,7 +8,7 @@ keywords: [[https://srfi.schemers.org/?keywords=data-structure][Data Structure]]
 
 This repository hosts [[https://srfi.schemers.org/srfi-195/][SRFI 195]]: Multiple-value boxes, a [[https://srfi.schemers.org/][Scheme Request for Implementation]].
 
-This SRFI is in /draft/ status.
+This SRFI is in /final/ status.
 
 See also [[https://srfi.schemers.org/srfi-111/][SRFI 111: Boxes]] and [[https://srfi.schemers.org/srfi-189/][SRFI 189: Maybe and Either: optional container types]].
 
